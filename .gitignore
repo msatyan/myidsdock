@@ -2,8 +2,12 @@
 ##########
 /nogit/
 
+node_modules
+package-lock.json
+
 .history
 0.*
 1.*
+
 
 iif.14.10.fc*.tar

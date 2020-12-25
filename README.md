@@ -45,7 +45,7 @@ docker ps -a
 
 
 # run the docker by assigning a container name = ids1c
-docker run -it -d --name ids1c idsdock/informix
+docker run -it -d --name ids1c -p 9099:60000 idsdock/informix
 # docker run -d -h informix --name ids1c idsdock/informix --start
 
 # e7bf4d895af5cf7c41b4e1021c5112b80844b8682960c60e79a48b0f876474d2
