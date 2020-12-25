@@ -58,7 +58,11 @@ docker ps -a
 docker exec -it ids1c /bin/bash
 # [root@e7bf4d895af5 ibm]
 
-# we are inside the container now
+####  we are inside the container now ####
+
+# if you want to be user informix
+# su informix
+
 onstat -
 # IBM Informix Dynamic Server Version 14.10.FC3DE -- On-Line -- Up 00:04:01 -- 172660 Kbytes
 
@@ -73,9 +77,12 @@ docker ps -a
 # CONTAINER ID   IMAGE               COMMAND                  CREATED         STATUS         PORTS       NAMES
 # e7bf4d895af5   idsdock/informix   "/opt/ibm/boot.sh --…"   7 minutes ago   Up 7 minutes   60000/tcp   ids1c
 
-# stop the container
+# to stop the container
 docker stop ids1c
 # ids1c
+
+# to start the container
+# docker start ids1c
 
 docker ps -a
 # CONTAINER ID   IMAGE               COMMAND                  CREATED         STATUS                       PORTS     NAMES

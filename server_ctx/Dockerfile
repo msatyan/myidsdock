@@ -9,7 +9,7 @@ VOLUME ["/opt/ibm/data/"]
 RUN yum -y update && yum -y install libaio sysstat libgcc libstdc compat-libstdc++-33 gcc kernel-headers kernel-devel net-tools.x86_64
 RUN /usr/sbin/groupadd -g 102 -f informix
 RUN ["/usr/sbin/useradd", "-m", "-g 102", "-u 200", "informix"]
-RUN /bin/bash -c 'echo "informix:changeme" | /usr/sbin/chpasswd'
+RUN /bin/bash -c 'echo "informix:mypwd123" | /usr/sbin/chpasswd'
 ADD iif.14.10.fc1.tar /opt/ibm/informix/
 ADD bundle.properties /tmp/bundle.properties
 RUN /opt/ibm/informix/ids_install -i silent -f /tmp/bundle.properties
