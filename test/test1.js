@@ -71,8 +71,10 @@ function ifxnjs_OpenSync(ConStr) {
 
 function main_func() {
   // var ConnectionString =  "SERVER=ids0;DATABASE=db1;HOST=192.168.238.3;SERVICE=9088;PROTOCOL=onsoctcp;UID=informix;PWD=Blue4You;"; // OK: local ids
+  
   // docker run -it -d --name ids1c -p 9099:60000 idsdock/informix
-  var ConnectionString = "SERVER=informix;DATABASE=db1;HOST=192.168.238.3;SERVICE=9099;PROTOCOL=onsoctcp;UID=informix;PWD=mypwd123;"; // OK: docker ids
+  // var ConnectionString = "SERVER=informix;DATABASE=db1;HOST=192.168.238.3;SERVICE=9099;PROTOCOL=onsoctcp;UID=informix;PWD=mypwd123;"; // OK: docker ids
+  var ConnectionString = "SERVER=informix;DATABASE=db1;HOST=localhost;SERVICE=9099;PROTOCOL=onsoctcp;UID=informix;PWD=mypwd123;"; // OK: docker ids
 
   //Synchronous Execution 
   ifxnjs_OpenSync(ConnectionString);
