@@ -15,6 +15,11 @@ ADD bundle.properties /tmp/bundle.properties
 RUN /opt/ibm/informix/ids_install -i silent -f /tmp/bundle.properties
 RUN /bin/bash -c 'chown informix:informix /opt/ibm/data/'
 RUN /bin/bash -c 'chown informix:informix /opt/ibm/myudr/'
+ADD wsBlade1.bld /opt/ibm/myudr/
+RUN /bin/bash -c 'chown informix:informix /opt/ibm/myudr/wsBlade1.bld'
+RUN /bin/bash -c 'chmod 700 /opt/ibm/myudr/wsBlade1.bld'
+
+# IDS install
 RUN /bin/bash -c '/bin/rm -rf /opt/ibm/informix/ids_install /opt/ibm/informix/IBM_Data_Server_Driver_Package /opt/ibm/informix/CSDK /opt/ibm/informix/ICONNECT /opt/ibm/informix/JDBC /opt/ibm/informix/SDK /opt/ibm/informix/SERVER'
 
 USER informix
@@ -45,7 +50,6 @@ ADD 10_delrepl.sh /opt/ibm/
 ADD 11_rename.sh /opt/ibm/
 ADD 12_apps.sh /opt/ibm/
 
-ADD wsBlade1.bld /opt/ibm/myudr/
 
 USER root
 

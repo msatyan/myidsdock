@@ -70,6 +70,11 @@ onstat -
 exit
 ```
 
+```
+# ls -l /opt/ibm/data/log/informix.log
+"SERVER=informix;DATABASE=db1;HOST=192.168.238.3;SERVICE=9099;PROTOCOL=onsoctcp;UID=informix;PWD=mypwd123;"
+```
+
 
 ### stop the container
 ```bash
