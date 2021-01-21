@@ -3,7 +3,7 @@ FROM centos:7
 MAINTAINER nagaraju@us.ibm.com
 ENV INFORMIXDIR /opt/ibm/informix/
 ENV LD_LIBRARY_PATH /lib64
-RUN mkdir /opt/ibm/  &&  mkdir /opt/ibm/informix
+RUN mkdir /opt/ibm/  &&  mkdir /opt/ibm/informix && mkdir /opt/ibm/myudr/
 #VOLUME ["/opt/ibm/informix/", "/opt/ibm/data/"]
 VOLUME ["/opt/ibm/data/"]
 RUN yum -y update && yum -y install libaio sysstat libgcc libstdc compat-libstdc++-33 gcc kernel-headers kernel-devel net-tools.x86_64
@@ -14,6 +14,7 @@ ADD iif.14.10.fc1.tar /opt/ibm/informix/
 ADD bundle.properties /tmp/bundle.properties
 RUN /opt/ibm/informix/ids_install -i silent -f /tmp/bundle.properties
 RUN /bin/bash -c 'chown informix:informix /opt/ibm/data/'
+RUN /bin/bash -c 'chown informix:informix /opt/ibm/myudr/'
 RUN /bin/bash -c '/bin/rm -rf /opt/ibm/informix/ids_install /opt/ibm/informix/IBM_Data_Server_Driver_Package /opt/ibm/informix/CSDK /opt/ibm/informix/ICONNECT /opt/ibm/informix/JDBC /opt/ibm/informix/SDK /opt/ibm/informix/SERVER'
 
 USER informix
@@ -43,6 +44,8 @@ ADD 09_chkrepl.sh /opt/ibm/
 ADD 10_delrepl.sh /opt/ibm/
 ADD 11_rename.sh /opt/ibm/
 ADD 12_apps.sh /opt/ibm/
+
+ADD wsBlade1.bld /opt/ibm/myudr/
 
 USER root
 
