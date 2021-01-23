@@ -4,8 +4,9 @@ Copy `iif.14.10.fc1.tar` file into `server_ctx/` and run `mydocker_build.sh` scr
 
 ```bash
 # make sure Informix server install image exist at
-ls -l myidsdock/server_ctx/iif.14.10.fc1.tar
-ls -l myidsdock/server_ctx/wsBlade1.bld
+cd myidsdock
+ls -l server_ctx/iif.14.10.fc1.tar
+ls -l server_ctx/wsBlade1.bld
 ```
 
 ### Optional initial cleanup

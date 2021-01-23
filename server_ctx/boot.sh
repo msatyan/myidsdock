@@ -120,6 +120,37 @@ EOF"
         rc=$?
         if [ $? -eq 0 ]
         then
+            #### FYI: only for the demo, delete it after that
+            #### DEMO setup start
+            su informix -c "${INFORMIXDIR}/bin/dbaccess sysadmin - <<EOF
+            create database db1 with log;
+EOF" 
+            sleep 1
+            su informix -c "${INFORMIXDIR}/bin/dbaccess db1 - <<EOF
+            -- DROP TABLE passengers2;
+            CREATE TABLE passengers2 (
+            id  SERIAL,  name char(20) PRIMARY KEY, img LVARCHAR(32739) );
+
+            INSERT INTO passengers2 (name, img) VALUES ('test1', 'my test img1');
+            SELECT * FROM passengers2 WHERE name  = 'test1'
+EOF" 
+            sleep 1
+            su informix -c "${INFORMIXDIR}/bin/dbaccess db1 - <<EOF
+            create function sqlAddNewPassenger (integer, lvarchar, lvarchar) returning lvarchar;
+            external name '/opt/ibm/myudr/wsBlade1.bld(CAddNewPassenger)' language c;
+
+            create function sqlMLClose () returning integer;
+            external name '/opt/ibm/myudr/wsBlade1.bld(CwsMLClose)' language c;
+
+            create function sqlVerifyPassenger (integer, lvarchar, lvarchar) returning lvarchar;
+            external name '/opt/ibm/myudr/wsBlade1.bld(CVerifyPassenger)' language c;
+
+            create function sqlSetConStrBuff (lvarchar) returning integer;
+            external name '/opt/ibm/myudr/wsBlade1.bld(CSetConStrBuff)' language c;
+EOF"
+           sleep 1
+           #### DEMO setup end
+
            wait4online_status=0
            break
         fi
