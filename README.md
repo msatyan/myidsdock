@@ -14,8 +14,11 @@ ls -l server_ctx/wsBlade1.bld
 # you may need 'container login' for example
 docker login
 # WARNING! Your password will be stored unencrypted in ~/.docker/config.json.
-# docker logout
 
+# logout
+docker logout
+
+# get list of all local images 
 docker images
 
 # incase if you have to clean the existing images
@@ -33,9 +36,6 @@ cd myidsdock
 
 # If above build is success then check the image
 docker images
-# REPOSITORY          TAG       IMAGE ID       CREATED          SIZE
-# idsdock/informix   latest    d29abe509358   39 minutes ago   1.7GB
-# centos              7         8652b9f0cb4c   5 weeks ago      204MB
 ```
 
 
@@ -43,24 +43,12 @@ docker images
 ```bash
 # Show both running and stopped containers
 docker ps -a
-# CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 
-
-# run the docker by assigning a container name = ids1c
-docker run -it -d --name ids1c -p 9099:60000 idsdock/informix
-# docker run -d -h informix --name ids1c idsdock/informix --start
-
-# e7bf4d895af5cf7c41b4e1021c5112b80844b8682960c60e79a48b0f876474d2
-
-docker ps -a
-# CONTAINER ID   IMAGE               COMMAND                  CREATED         STATUS         PORTS       NAMES
-# e7bf4d895af5   idsdock/informix   "/opt/ibm/boot.sh --…"   7 seconds ago   Up 6 seconds   60000/tcp   ids1c
+# run the docker by assigning a container name = idsdb-cnt1
+docker run -it -d --name idsdb-cnt1 -p 9099:60000 idsdb1
 
 # runs a new command in a running container.
-docker exec -it ids1c /bin/bash
-# [root@e7bf4d895af5 ibm]
-
-####  we are inside the container now ####
+docker exec -it idsdb-cnt1 /bin/bash
 
 # if you want to be user informix
 # su informix
@@ -81,30 +69,40 @@ exit
 ### stop the container
 ```bash
 docker ps -a
-# CONTAINER ID   IMAGE               COMMAND                  CREATED         STATUS         PORTS       NAMES
-# e7bf4d895af5   idsdock/informix   "/opt/ibm/boot.sh --…"   7 minutes ago   Up 7 minutes   60000/tcp   ids1c
 
 # to stop the container
-docker stop ids1c
-# ids1c
+docker stop idsdb-cnt1
 
 # to start the container
-# docker start ids1c
+docker start idsdb-cnt1
 
-docker ps -a
-# CONTAINER ID   IMAGE               COMMAND                  CREATED         STATUS                       PORTS     NAMES
-# e7bf4d895af5   idsdock/informix   "/opt/ibm/boot.sh --…"   7 minutes ago   Exited (137) 3 seconds ago             ids1c
+# delete the container
+docker container rm idsdb-cnt1
 ```
 
 
-### delete the container
+
+### Create a new docker image from the container and push to docker hub
 ```bash
-docker container rm ids1c
-# ids1c
+docker ps -a | grep idsdb1
+# 03015aeabf25
 
-docker ps -a
-# CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+# docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
+docker commit 03015aeabf25  xuser1/idsdb1
+
+# to push the image to docker hub
+# docker push [OPTIONS] NAME[:TAG]
+docker push xuser1/idsdb1
 ```
+
+
+### Pull the docker image from the docker hub and run
+```bash
+docker pull xuser1/idsdb1
+docker run -it -d --name idsdb-cnt1 -p 9099:60000 -d xuser1/idsdb1
+# https://cloud.docker.com/repository/docker/xuser1/idsdb1
+```
+
 
 ### Cleanup
 ```bash
